@@ -1,0 +1,33 @@
+{
+	"name": "ts-command-starter",
+	"version": "0.0.1",
+	"description": "A starter for TypeScript command line projects",
+	"main": "./lib/index.js",
+	"bin": {
+		"comm-start": "./lib/index.js"
+	},
+	"scripts": {
+		"start": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
+		"create": "yarn build && yarn test",
+		"build": "tsc -p .",
+		"test": "sudo yarn global add && comm-start",
+		"refresh": "rm -rf ./node-modules ./package-lock.json && yarn install"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"chalk": "^3.0.0",
+		"clear": "^0.1.0",
+		"commander": "^4.0.0",
+		"figlet": "^1.2.4",
+		"inquirer": "^7.0.0",
+		"path": "^0.12.7"
+	},
+	"devDependencies": {
+		"@types/clear": "^0.1.0",
+		"@types/figlet": "^1.2.0",
+		"@types/node": "^12.12.7",
+		"nodemon": "^1.19.4",
+		"ts-node": "^8.4.1",
+		"typescript": "^3.7.2"
+	}
+}
