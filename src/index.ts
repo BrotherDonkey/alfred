@@ -6,16 +6,25 @@ import figlet from 'figlet';
 import path from 'path';
 import commander, { CommanderStatic } from 'commander';
 import clear from 'clear';
+import { config } from 'dotenv';
+import { IProgram } from "./types";
 
-interface IProgram extends CommanderStatic {
-	xtremely: boolean;
-	withFlags: string;
-}
+/**
+ * Load enviroment from .env
+ */
+config();
 
+/**
+ * Declarations
+ */
 const program = commander as IProgram;
-let command: 'comm';
-const { argv } = process;
+let command: 'comm' | 'sec';
+const { argv, env } = process;
 
+
+/**
+ * Comm command
+ */
 program
 	.version('0.0.1')
 	.command('comm <arg> [opt]')
@@ -25,14 +34,27 @@ program
 		command = 'comm';
 		console.log(command);
 		console.log(cmdLine.xtremely, { arg }, { opt }, { cmdLine })
+		console.log(env.COMMENT);
 	});
 
-program.parse(argv);
+/**
+ * Second command
+ */
+program
+	.version('0.0.1')
+	.command('sec <arg> [opt]')
+	.description('a second command')
+	.option('-x, --xtremely', 'Be extreme')
+	.action(function (arg, opt, cmdLine) {
+		command = 'sec';
+		console.log(command);
+		console.log(cmdLine.xtremely, { arg }, { opt }, { cmdLine })
+	});
 
-// console.log(program.args)
-// console.log(program);
-// console.log(program.xtremely);
-// No args
+/**
+ * Parse program
+ */
+program.parse(argv);
 
 if (noInput(argv)) {
 	clear();
