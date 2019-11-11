@@ -8,6 +8,7 @@ import commander, { CommanderStatic } from 'commander';
 import clear from 'clear';
 import { config } from 'dotenv';
 import { IProgram } from "./types";
+import { fonts } from "./fonts";
 
 /**
  * Load enviroment from .env
@@ -59,10 +60,10 @@ program.parse(argv);
 if (noInput(argv)) {
 	clear();
 	console.log(
-		chalk.red(
-			figlet.textSync('Hello world', {
+		chalk.magentaBright(
+			figlet.textSync('Jarvis', {
 				horizontalLayout: 'full',
-				font: 'Tsalagi'
+				font: 'ANSI Shadow' // Calvin S, ANSI Shadow
 			})
 		)
 	);
