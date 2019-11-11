@@ -13,19 +13,25 @@ interface IProgram extends CommanderStatic {
 }
 
 const program = commander as IProgram;
-
+let command: 'comm';
 const { argv } = process;
 
 program
 	.version('0.0.1')
-	.description('A starting command line program written in TypeScript')
-	.option('-x, --xtremely', 'Extremely cool command')
-	.option('-w, --with-flag <type>', 'With flags')
-	.parse(process.argv);
+	.command('comm <arg> [opt]')
+	.description('a command')
+	.option('-x, --xtremely', 'Be extreme')
+	.action(function (arg, opt, cmdLine) {
+		command = 'comm';
+		console.log(command);
+		console.log(cmdLine.xtremely, { arg }, { opt }, { cmdLine })
+	});
 
-console.log(program.args)
-console.log(program);
-console.log(program.xtremely);
+program.parse(argv);
+
+// console.log(program.args)
+// console.log(program);
+// console.log(program.xtremely);
 // No args
 
 if (noInput(argv)) {
