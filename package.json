@@ -1,7 +1,7 @@
 {
-	"name": "ts-command-starter",
+	"name": "alfred",
 	"version": "0.0.1",
-	"description": "A starter for TypeScript command line projects",
+	"description": "A command line assistant",
 	"main": "./lib/index.js",
 	"bin": {
 		"comm-start": "./lib/index.js"
