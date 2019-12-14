@@ -10,4 +10,24 @@ export interface IDotConfig extends DotenvConfigOutput {
     DEFAULT_AZURE_DEVOPS_PROJECT: string;
     DEFAULT_AZURE_DEVOPS_TARGET: string;
     COMMENT: string;
+    AZURE_DEVOPS_ENGINEERING_PROJECT_ID: string;
+    AZURE_DEVOPS_WIKI: string;
+    AZURE_DEVOPS_WIKI_TEAM_PAGE: string;
+    CURRENT_FISCAL_QUARTER: string;
+}
+export interface IWikiePageResponse {
+    eTag: string;
+    page: Page;
+}
+export interface Page {
+    content: string;
+    gitItemPath: string;
+    id: number;
+    isNonConformant: null;
+    isParentPage: boolean;
+    order: number;
+    path: string;
+    remoteUrl: string;
+    subPages: any[];
+    url: string;
 }
