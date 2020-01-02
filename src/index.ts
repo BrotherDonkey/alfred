@@ -1,18 +1,17 @@
 #!/usr/bin/env node
 
-import { noInput } from "./utils";
 import chalk from 'chalk';
-import figlet from 'figlet';
-import path from 'path';
-import commander, { CommanderStatic } from 'commander';
 import clear from 'clear';
+import commander from 'commander';
 import { config } from 'dotenv';
-import { IProgram, IDotConfig } from "./types";
-import { fonts } from "./fonts";
+import figlet from 'figlet';
 import * as inquirer from 'inquirer';
-import { createPullRequestQuestions } from "./prompts/pr-prompts";
 import * as shell from 'shelljs';
-import { getFiscalPointer, createNextWeeksWikiName } from "./time";
+import { createPullRequestQuestions } from "./prompts/pr-prompts";
+import { IDotConfig, IProgram, TTopLevelCommand } from "./types";
+import { noInput } from "./utils";
+import { wiki } from "./wiki";
+import { pullRequest } from './pull-request';
 
 /**
  * Load enviroment from .env
@@ -22,9 +21,7 @@ config();
 /**
  * Declarations
  */
-const program = commander as IProgram;
-let command: 'wiki' | 'pull-request';
-let subcommand: 'create' | 'list';
+export const program = commander as IProgram;
 const argv = process.argv;
 const env = <IDotConfig><unknown>process.env;
 
@@ -46,110 +43,12 @@ const env = <IDotConfig><unknown>process.env;
 /**
  * Create or edit a wiki
  */
-program
-	.version('0.0.1')
-	.command('wiki <action>')
-	.description('create or manage a devops wiki')
-	.action(async (arg, opt, cmdLine) => {
-		command = 'wiki'
-		subcommand = arg || 'list' || 'show-last' || 'next-week';
-
-		// const answers = await prPrompt(createPullRequestQuestions(env));
-
-		// console.log(answers);
-		console.log('Getting a list of wikis');
-		switch (arg) {
-			case 'list':
-				shell.exec([`az devops wiki list`,
-				`--organization="${env.DEFAULT_AZURE_DEVOPS_ORGANIZATION}"`,
-				`--project="${env.AZURE_DEVOPS_ENGINEERING_PROJECT_ID}"`,
-			].join(' '),
-				(code: number, output: string) => {
-						console.log('Code', code);	
-						console.log('Output', output);
-					})
-					return;
-				break;
-				case undefined:
-					program.outputHelp();
-			case 'show-last':
-					shell.exec([`az devops wiki page show`,
-					`--organization="${env.DEFAULT_AZURE_DEVOPS_ORGANIZATION}"`,
-					`--project="${env.AZURE_DEVOPS_ENGINEERING_PROJECT_ID}"`,
-					`--path="${env.AZURE_DEVOPS_WIKI_TEAM_PAGE}/${getFiscalPointer(new Date())}"`,
-					`--wiki="${env.AZURE_DEVOPS_WIKI}"`
-				].join(' '),
-					(code: number, output: string) => {
-							console.log('Code', code);
-							console.log('Output', output);
-						})
-						return;
-				case 'next-week':
-						const nw = createNextWeeksWikiName()
-						shell.exec([`az devops wiki page create`,
-						`--organization="${env.DEFAULT_AZURE_DEVOPS_ORGANIZATION}"`,
-						`--project="${env.AZURE_DEVOPS_ENGINEERING_PROJECT_ID}"`,
-						`--path="${env.AZURE_DEVOPS_WIKI_TEAM_PAGE}/${nw.parentPage}/${nw.wikiName}"`,
-						`--wiki="${env.AZURE_DEVOPS_WIKI}"`,
-						`--content="content"`
-					].join(' '),
-						(code: number, output: string) => {
-								console.log('Code', code);
-								console.log('Output', output);
-							})
-					break;
-			default:
-				break;
-		}
-		
-	});
+wiki(program, env);
 
 /**
  * Create a pull request
  */
-program
-	.version('0.0.1')
-	.command('pr')
-	.description('create a new pull request')
-	.action(async (arg, opt, cmdLine) => {
-		const prPrompt = inquirer.createPromptModule();
-		command = 'pull-request'
-		const answers = await prPrompt(createPullRequestQuestions(env));
-
-		console.log('Creating your pull request');
-		shell.exec([`az repos pr create`,
-		`--organization="${env.DEFAULT_AZURE_DEVOPS_ORGANIZATION}"`,
-		`--project="${env.AZURE_DEVOPS_ENGINEERING_PROJECT_ID}"`,
-		`--repository="${env.DEFAULT_AZURE_DEVOPS_REPO}"`,
-		`--title="${answers.prName}"`,
-		`--description="${answers.prDescription}"`,
-		`--draft="true"`,
-		`--target-branch "${answers.targetBranch || env.DEFAULT_AZURE_DEVOPS_PROJECT}"`,
-		`--source-branch="${answers.sourceBranch}"`,
-		`--open`].join(' '),
-		(code: number, output: string) => {
-				console.log('Code', code);
-				console.log('Output', output);
-			})
-	});
-
-/**
- * Parse program
- */
-program.parse(argv);
-
-if (noInput(argv)) {
-	clear();
-	console.log(
-		chalk.magentaBright(
-			figlet.textSync('Jarvis', {
-				horizontalLayout: 'full',
-				font: 'ANSI Shadow' // Calvin S, ANSI Shadow
-			})
-		)
-	);
-	program.outputHelp();
-}
+pullRequest(program, env);
 
 // Normal input
 
@@ -161,6 +60,15 @@ if (program.withFlags) {
 	console.log('Flag', program.withFlags);
 }
 
-export const getNextMonday = (now: Date) => {
-	return now.setDate(now.getDate() + 1);
+/**
+ * Parse program
+ */
+program.parse(argv);
+if (noInput(argv)) {
+	clear();
+	console.log(chalk.magentaBright(figlet.textSync('Jarvis', {
+		horizontalLayout: 'full',
+		font: 'ANSI Shadow' // Calvin S, ANSI Shadow
+	})));
+	program.outputHelp();
 }

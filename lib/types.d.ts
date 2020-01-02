@@ -31,3 +31,24 @@ export interface Page {
     subPages: any[];
     url: string;
 }
+export declare type TTopLevelCommand = 'wiki' | 'pull-request';
+export declare type TWikiSubCommand = 'list' | 'show-last' | 'next-week';
+export declare type TPRSubCommand = 'create' | 'list';
+export declare type ListWikiPagesResponse = WikiPageInfo[];
+export interface WikiPageInfo {
+    id: string;
+    mappedPath: string;
+    name: string;
+    projectId: string;
+    properties: null;
+    remoteUrl: string;
+    repositoryId: string;
+    type: string;
+    url: string;
+    versions: Version[];
+}
+export interface Version {
+    version: string;
+    versionOptions: null;
+    versionType: null;
+}

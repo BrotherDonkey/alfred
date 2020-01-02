@@ -11,7 +11,7 @@ export const getCurrentFiscalYear = (now: Date): string => {
 }
 
 export const getCurrentFiscalQuarter = (now: Date): string => {
-	const calendarQuarter = Math.floor(now.getMonth()/3) + 3;
+	const calendarQuarter = Math.floor(now.getMonth() / 3) + 3;
 	const fiscalQuarter = (calendarQuarter > 4 ? calendarQuarter - 4 : calendarQuarter).toString();
 	return `Q${fiscalQuarter}`;
 }
@@ -21,19 +21,19 @@ export const getFiscalPointer = (now: Date): string => {
 };
 
 export const getNextMonday = (now: Date) => {
-    const currentDay = now.getDay();
-    const difference = Math.abs(currentDay) - 2;
-    const nextMonday = now.setDate(now.getDate() + difference);
-    const nMD = new Date(nextMonday);
-    return nMD;
+	const currentDay = now.getDay();
+	const difference = Math.abs(currentDay) - 2;
+	const nextMonday = now.setDate(now.getDate() + difference);
+	const nMD = new Date(nextMonday);
+	return nMD;
 }
 
 export const getPreviousMonday = (now: Date) => {
-    const currentDay = now.getDay();
-    const difference = Math.abs(currentDay) - 1;
-    const previousMonday = now.setDate(now.getDate() - difference);
-    const nMD = new Date(previousMonday);
-    return nMD;
+	const currentDay = now.getDay();
+	const difference = Math.abs(currentDay) - 1;
+	const previousMonday = now.setDate(now.getDate() - difference);
+	const nMD = new Date(previousMonday);
+	return nMD;
 }
 
 interface WikiName {

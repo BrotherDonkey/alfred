@@ -26,14 +26,41 @@ export interface IWikiePageResponse {
 }
 
 export interface Page {
-	content:         string;
-	gitItemPath:     string;
-	id:              number;
+	content: string;
+	gitItemPath: string;
+	id: number;
 	isNonConformant: null;
-	isParentPage:    boolean;
-	order:           number;
-	path:            string;
-	remoteUrl:       string;
-	subPages:        any[];
-	url:             string;
+	isParentPage: boolean;
+	order: number;
+	path: string;
+	remoteUrl: string;
+	subPages: any[];
+	url: string;
+}
+
+export type TTopLevelCommand = 'wiki' | 'pull-request';
+
+export type TWikiSubCommand = 'list' | 'show-last' | 'next-week'
+export type TPRSubCommand = 'create' | 'list';
+
+
+export type ListWikiPagesResponse = WikiPageInfo[];
+
+export interface WikiPageInfo {
+	id: string;
+	mappedPath: string;
+	name: string;
+	projectId: string;
+	properties: null;
+	remoteUrl: string;
+	repositoryId: string;
+	type: string;
+	url: string;
+	versions: Version[];
+}
+
+export interface Version {
+	version: string;
+	versionOptions: null;
+	versionType: null;
 }
