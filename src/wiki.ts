@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-import { config, DotenvConfigOptions } from 'dotenv';
 import * as shell from 'shelljs';
 import { createNextWeeksWikiName, getFiscalPointer } from "./time";
-import commander, { CommanderStatic } from 'commander';
-import { IProgram, IDotConfig, TTopLevelCommand, ListWikiPagesResponse } from './types';
+import { IDotConfig, IProgram, ListWikiPagesResponse, TTopLevelCommand } from './types';
+import chalk = require('chalk');
+import figlet from 'figlet';
 
 /**
  * Load enviroment from .env
@@ -16,10 +16,9 @@ export function wiki(program: IProgram, env: IDotConfig) {
         .command('wiki <action>')
         .description('create or manage a devops wiki')
         .action(async (arg, opt, cmdLine) => {
-            let command: TTopLevelCommand = 'wiki';
-            let subcommand = arg || 'list' || 'show-last' || 'next-week';
-            // const answers = await prPrompt(createPullRequestQuestions(env));
-            // console.log(answers);
+            const command: TTopLevelCommand = 'wiki';
+            const subcommand = arg || 'list' || 'show-last' || 'next-week';
+
             console.log('Getting a list of wikis');
             switch (arg) {
                 case 'list':
@@ -29,7 +28,8 @@ export function wiki(program: IProgram, env: IDotConfig) {
                     ].join(' '), (code: number, output: string) => {
                         const response: ListWikiPagesResponse = JSON.parse(output);
                         const responseNames = response.map(wiki => wiki.name);
-                        console.log(responseNames);
+                        jarvisSays();
+                        console.log(chalk.blueBright(responseNames.join('\n')));
                     });
                     return;
                     break;
@@ -64,3 +64,7 @@ export function wiki(program: IProgram, env: IDotConfig) {
             }
         });
 }
+function jarvisSays() {
+    console.log(chalk.redBright(figlet.textSync('Jarvis says', 'Cybermedium')));
+}
+

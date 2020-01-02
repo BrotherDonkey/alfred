@@ -5,13 +5,10 @@ import clear from 'clear';
 import commander from 'commander';
 import { config } from 'dotenv';
 import figlet from 'figlet';
-import * as inquirer from 'inquirer';
-import * as shell from 'shelljs';
-import { createPullRequestQuestions } from "./prompts/pr-prompts";
-import { IDotConfig, IProgram, TTopLevelCommand } from "./types";
+import { pullRequest } from './pull-request';
+import { IDotConfig, IProgram } from "./types";
 import { noInput } from "./utils";
 import { wiki } from "./wiki";
-import { pullRequest } from './pull-request';
 
 /**
  * Load enviroment from .env

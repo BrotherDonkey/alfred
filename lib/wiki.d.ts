@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { IProgram, IDotConfig } from './types';
+import { IDotConfig, IProgram } from './types';
 /**
  * Load enviroment from .env
  */
