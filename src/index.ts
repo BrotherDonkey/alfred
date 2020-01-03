@@ -50,7 +50,7 @@ pullRequest(program, env);
 
 // Normal input
 
-query(program, env);
+// query(program, env);
 
 if (program.xtremely) {
 	console.log('Extremely');
