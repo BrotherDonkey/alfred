@@ -84,3 +84,37 @@ export interface ShowPagePage {
     subPages: any[];
     url: string;
 }
+export interface BoardsQueryResponse {
+    fields: Fields;
+    id: number;
+    relations: null;
+    rev: number;
+    url: string;
+}
+export interface Fields {
+    "System.AssignedTo"?: SystemAssignedTo;
+    "System.Id": number;
+    "System.State": string;
+    "System.Tags": string;
+    "System.Title": string;
+    "System.WorkItemType": SystemWorkItemType;
+}
+export interface SystemAssignedTo {
+    _links: Links;
+    descriptor: string;
+    displayName: string;
+    id: string;
+    imageUrl: string;
+    uniqueName: string;
+    url: string;
+}
+export interface Links {
+    avatar: Avatar;
+}
+export interface Avatar {
+    href: string;
+}
+export declare enum SystemWorkItemType {
+    DevTask = "Dev Task",
+    Feature = "Feature"
+}

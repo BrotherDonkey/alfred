@@ -1,0 +1,14 @@
+SELECT
+    [System.Id],
+    [System.WorkItemType],
+    [System.Title],
+    [System.AssignedTo],
+    [System.State],
+    [System.Tags]
+FROM workitems
+WHERE
+    [System.TeamProject] = @project
+    AND [System.WorkItemType] <> ''
+    AND [System.Tags] CONTAINS '{{{replace}}}'
+    AND [System.AreaPath] = 'Engineering\Teams\UXE\Fox 🦊'
+ORDER BY [System.AssignedTo]

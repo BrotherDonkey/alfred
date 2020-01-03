@@ -9,6 +9,7 @@ import { pullRequest } from './pull-request';
 import { IDotConfig, IProgram } from "./types";
 import { noInput } from "./utils";
 import { wiki } from "./wiki";
+import { query } from './query';
 
 /**
  * Load enviroment from .env
@@ -49,6 +50,8 @@ pullRequest(program, env);
 
 // Normal input
 
+query(program, env);
+
 if (program.xtremely) {
 	console.log('Extremely');
 }
@@ -69,3 +72,4 @@ if (noInput(argv)) {
 	})));
 	program.outputHelp();
 }
+
