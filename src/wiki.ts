@@ -72,7 +72,7 @@ export function wiki(program: IProgram, env: IDotConfig) {
                             response = createNewFiscalYearPage(env, nw, templateFilePath, response, () => createNewWeekPage(env, nw));
                         } else {
                             const { eTag, page: { content } } = response;
-                            const updatedContent = `${existingFYPageContent(content)}\n- [${nw.wikiName}](https://dev.azure.com/ceapex/Engineering/_wiki/wikis/Engineering.wiki/${nw.wikiName})`;
+                            const updatedContent = `${existingFYPageContent(content)}\n- [${nw.wikiName}](https://dev.azure.com/ceapex/Engineering/_wiki/wikis/Engineering.wiki/${nw.parentPage}/${nw.wikiName})`;
                             writeFileSync(templateFilePath, updatedContent);
                             updateFiscalYearPage(env, nw, eTag, templateFilePath, () => createNewWeekPage(env, nw));
                         }
