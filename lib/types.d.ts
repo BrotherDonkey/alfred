@@ -52,3 +52,35 @@ export interface Version {
     versionOptions: null;
     versionType: null;
 }
+export interface WikiPageCreateResponse {
+    eTag: string;
+    page: Page;
+}
+export interface WikiPage {
+    content: string;
+    gitItemPath: string;
+    id: number;
+    isNonConformant: true | null;
+    isParentPage: true | null;
+    order: number;
+    path: string;
+    remoteUrl: string;
+    subPages: any[];
+    url: string;
+}
+export interface ShowPageResponse {
+    eTag: string;
+    page: Page;
+}
+export interface ShowPagePage {
+    content: string;
+    gitItemPath: string;
+    id: number;
+    isNonConformant: boolean | null;
+    isParentPage: boolean | null;
+    order: number;
+    path: string;
+    remoteUrl: string;
+    subPages: any[];
+    url: string;
+}

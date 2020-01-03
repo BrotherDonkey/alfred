@@ -36,7 +36,7 @@ export const getPreviousMonday = (now: Date) => {
 	return nMD;
 }
 
-interface WikiName {
+export interface WikiName {
 	parentPage: string;
 	wikiName: string;
 }
